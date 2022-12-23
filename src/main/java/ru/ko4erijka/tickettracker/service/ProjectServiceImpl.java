@@ -38,4 +38,25 @@ public class ProjectServiceImpl implements ProjectService{
     private ProjectEntity buildEntity(ProjectDTO dto){
         return new ProjectEntity(dto.getName(),dto.getDesc(),dto.getWorkloadId(), dto.getAuthorId(), LocalDateTime.now(), LocalDateTime.now());
     }
+
+    @Override
+    public ProjectDTO update(ProjectDTO dto, String id) {
+        ProjectEntity projectEntity = projectRepository.findById(id).orElse(null);
+        if(projectEntity !=null){
+            projectEntity.setName(dto.getName());
+            projectEntity.setDesc(dto.getDesc());
+            projectEntity.setWorkloadId(dto.getWorkloadId());
+            projectEntity.setAuthorId(dto.getAuthorId());
+            projectEntity.setUpdatedAt(LocalDateTime.now());
+            projectRepository.save(projectEntity);
+            return buildDto(projectEntity);
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public void deleteById(String id) {
+        projectRepository.deleteById(id);
+    }
 }

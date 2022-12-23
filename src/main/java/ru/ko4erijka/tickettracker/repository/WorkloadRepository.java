@@ -10,6 +10,4 @@ import java.util.Optional;
 @Repository
 public interface WorkloadRepository extends JpaRepository<WorkloadEntity, String> {
 
-
-
 }

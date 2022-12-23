@@ -1,15 +1,10 @@
 package ru.ko4erijka.tickettracker.dto;
 
 public class ProjectDTO {
-
     private String name;
-
     private String authorId;
-
     private String desc;
-
     private String workloadId;
-
     public ProjectDTO(String name, String authorId, String desc, String workloadId) {
         this.name = name;
         this.authorId = authorId;

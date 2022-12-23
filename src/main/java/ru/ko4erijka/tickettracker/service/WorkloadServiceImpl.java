@@ -1,12 +1,13 @@
 package ru.ko4erijka.tickettracker.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.ko4erijka.tickettracker.dto.WorkloadDTO;
 import ru.ko4erijka.tickettracker.entity.WorkloadEntity;
 import ru.ko4erijka.tickettracker.repository.WorkloadRepository;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class WorkloadServiceImpl implements WorkloadService{
@@ -56,8 +57,17 @@ public class WorkloadServiceImpl implements WorkloadService{
     }
 
     @Override
-    public WorkloadDTO deleteById(String id) {
-       return null;//не понял как написать
+    public void deleteById(String id) {
+        workloadRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<WorkloadDTO> getAll(Integer pageSize, Integer pageNumber) {
+       Page<WorkloadEntity> workloadsEntity = workloadRepository.findAll(Pageable
+                .ofSize(pageSize)
+                .withPage(pageNumber));
+        return workloadsEntity.map(this::buildDto);
+
     }
 
 
