@@ -1,46 +1,27 @@
 package ru.ko4erijka.tickettracker.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectDTO {
+    @NotNull
+    @Size(max = 128)
     private String name;
+    @NotNull
+    @Size(max = 128)
     private String authorId;
+    @NotNull
+    @Size(max = 128)
     private String desc;
+    @NotNull
+    @Size(max = 128)
     private String workloadId;
-    public ProjectDTO(String name, String authorId, String desc, String workloadId) {
-        this.name = name;
-        this.authorId = authorId;
-        this.desc = desc;
-        this.workloadId = workloadId;
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(String authorId) {
-        this.authorId = authorId;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public String getWorkloadId() {
-        return workloadId;
-    }
-
-    public void setWorkloadId(String workloadId) {
-        this.workloadId = workloadId;
-    }
 }

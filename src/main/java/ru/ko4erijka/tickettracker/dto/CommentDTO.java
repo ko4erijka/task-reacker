@@ -1,32 +1,23 @@
 package ru.ko4erijka.tickettracker.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommentDTO {
+    @NotNull
+    @Size(max = 128)
     private String text;
+    @NotNull
+    @Size(max = 128)
     private String taskId;
+    @NotNull
+    @Size(max = 128)
     private String authorId;
-
-    public CommentDTO(String text, String taskId, String authorId) {
-        this.text = text;
-        this.taskId = taskId;
-        this.authorId = authorId;
-    }
-    public String getText() {
-        return text;
-    }
-    public void setText(String text) {
-        this.text = text;
-    }
-    public String getTaskId() {
-        return taskId;
-    }
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-    public String getAuthorId() {
-        return authorId;
-    }
-    public void setAuthorId(String authorId) {
-        this.authorId = authorId;
-    }
-
 }

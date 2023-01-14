@@ -10,7 +10,7 @@ import ru.ko4erijka.tickettracker.repository.WorkloadRepository;
 import java.time.LocalDateTime;
 
 @Service
-public class WorkloadServiceImpl implements WorkloadService{
+public class WorkloadServiceImpl implements WorkloadService {
 
     private final WorkloadRepository workloadRepository;
 
@@ -24,34 +24,34 @@ public class WorkloadServiceImpl implements WorkloadService{
         return dto;
     }
 
-    private WorkloadEntity buildEntity(WorkloadDTO dto){
-      return new WorkloadEntity(dto.getName(),dto.getAuthorId(), LocalDateTime.now(), LocalDateTime.now());
+    private WorkloadEntity buildEntity(WorkloadDTO dto) {
+        return new WorkloadEntity(dto.getName(), dto.getAuthorId(), LocalDateTime.now(), LocalDateTime.now());
     }
 
     @Override
     public WorkloadDTO getById(String id) {
         WorkloadEntity workloadEntity = workloadRepository.findById(id).orElse(null);
-        if(workloadEntity !=null){
+        if (workloadEntity != null) {
             return buildDto(workloadEntity);
-        }else {
+        } else {
             return null;
         }
     }
 
-    private WorkloadDTO buildDto(WorkloadEntity entity){
-        return new WorkloadDTO(entity.getName(),entity.getAuthorId());
+    private WorkloadDTO buildDto(WorkloadEntity entity) {
+        return new WorkloadDTO(entity.getName(), entity.getAuthorId());
     }
 
     @Override
     public WorkloadDTO update(WorkloadDTO dto, String id) {
         WorkloadEntity workloadEntity = workloadRepository.findById(id).orElse(null);
-        if(workloadEntity !=null){
+        if (workloadEntity != null) {
             workloadEntity.setName(dto.getName());
             workloadEntity.setAuthorId(dto.getAuthorId());
             workloadEntity.setUpdatedAt(LocalDateTime.now());
             workloadRepository.save(workloadEntity);
             return buildDto(workloadEntity);
-        }else {
+        } else {
             return null;
         }
     }
@@ -63,12 +63,18 @@ public class WorkloadServiceImpl implements WorkloadService{
 
     @Override
     public Page<WorkloadDTO> getAll(Integer pageSize, Integer pageNumber) {
-       Page<WorkloadEntity> workloadsEntity = workloadRepository.findAll(Pageable
+        Page<WorkloadEntity> workloadsEntity = workloadRepository.findAll(Pageable
                 .ofSize(pageSize)
                 .withPage(pageNumber));
         return workloadsEntity.map(this::buildDto);
 
     }
 
-
+    @Override
+    public Page<WorkloadDTO> find(String name, Integer pageSize, Integer pageNumber) {
+        Page<WorkloadEntity> workloadsEntity = workloadRepository.findByName(name, Pageable
+                .ofSize(pageSize)
+                .withPage(pageNumber));
+        return workloadsEntity.map(this::buildDto);
+    }
 }

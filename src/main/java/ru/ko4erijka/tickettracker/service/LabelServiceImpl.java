@@ -1,5 +1,7 @@
 package ru.ko4erijka.tickettracker.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.ko4erijka.tickettracker.dto.LabelDTO;
 import ru.ko4erijka.tickettracker.entity.LabelEntity;
@@ -57,6 +59,14 @@ public class LabelServiceImpl implements LabelService{
     @Override
     public void deleteById(String id) {
         labelRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<LabelDTO> getAll(Integer pageSize, Integer pageNumber) {
+        Page<LabelEntity> labelEntity = labelRepository.findAll(Pageable
+                .ofSize(pageSize)
+                .withPage(pageNumber));
+        return labelEntity.map(this::buildDto);
     }
 
 }

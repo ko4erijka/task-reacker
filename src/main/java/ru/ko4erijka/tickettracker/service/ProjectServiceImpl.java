@@ -1,5 +1,7 @@
 package ru.ko4erijka.tickettracker.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.ko4erijka.tickettracker.dto.ProjectDTO;
 import ru.ko4erijka.tickettracker.entity.ProjectEntity;
@@ -58,5 +60,21 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public void deleteById(String id) {
         projectRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<ProjectDTO> find(String name, Integer pageSize, Integer pageNumber) {
+        Page<ProjectEntity> projectEntity = projectRepository.findByName(name, Pageable
+                .ofSize(pageSize)
+                .withPage(pageNumber));
+        return projectEntity.map(this::buildDto);
+    }
+
+    @Override
+    public Page<ProjectDTO> getAll(Integer pageSize, Integer pageNumber) {
+        Page<ProjectEntity> projectEntity = projectRepository.findAll(Pageable
+                .ofSize(pageSize)
+                .withPage(pageNumber));
+        return projectEntity.map(this::buildDto);
     }
 }

@@ -1,5 +1,7 @@
 package ru.ko4erijka.tickettracker.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.ko4erijka.tickettracker.dto.CommentDTO;
 import ru.ko4erijka.tickettracker.entity.CommentEntity;
@@ -55,6 +57,14 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public void deleteById(String id) {
         commentRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<CommentDTO> getAll(Integer pageSize, Integer pageNumber) {
+        Page<CommentEntity> commentEntity = commentRepository.findAll(Pageable
+                .ofSize(pageSize)
+                .withPage(pageNumber));
+        return commentEntity.map(this::buildDto);
     }
 
 }
